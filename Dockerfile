@@ -1,10 +1,13 @@
 FROM python:3
 
-LABEL maintainer="[MAINTAINER_NAME]"
+LABEL maintainer="ems-project"
 
-COPY ./requirements.txt /app/
-COPY ./mysql_faker.py /app/
+COPY . /app/
 
+# Update package list and install dependencies
+RUN apt-get update && \
+    pip install --no-cache-dir -r requirements.txt && \
+    apt-get clean && rm -rf /var/lib/apt/lists/*
 WORKDIR /app
 
 RUN pip install -r requirements.txt
